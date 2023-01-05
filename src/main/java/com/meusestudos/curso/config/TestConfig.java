@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.meusestudos.curso.entities.Category;
 import com.meusestudos.curso.entities.Order;
 import com.meusestudos.curso.entities.OrderItem;
+import com.meusestudos.curso.entities.Payment;
 import com.meusestudos.curso.entities.Product;
 import com.meusestudos.curso.entities.User;
 import com.meusestudos.curso.entities.enums.OrderStatus;
@@ -43,7 +44,7 @@ public class TestConfig implements CommandLineRunner {
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456"); // instanciar os objetos
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"),OrderStatus.CANCELED, u1);
+		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"),OrderStatus.PAID,u1);
 		
 		Category cat1 = new Category(null, "Electronics");
 		Category cat2 = new Category(null, "Books");
@@ -79,7 +80,9 @@ public class TestConfig implements CommandLineRunner {
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2));
 	
-
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T19:53:07Z"),o1);
+		o1.setPayment(pay1);
+		orderRepository.save(o1);
 	}
 
 }
